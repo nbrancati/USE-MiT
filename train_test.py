@@ -61,7 +61,7 @@ class CustomDataset(Dataset):
 
 
 
-def train_model(criterion, dataset, dataset_tr, dataset_test, kf, k_folds, device, num_epochs, lr, bs):
+def train_model(criterion, dataset, dataset_tr, dataset_test, device, num_epochs, lr, bs):
     """Main training loop with validation and logging."""
     model = smp.USE_MiT(
         encoder_name="mit_b4",
@@ -167,8 +167,7 @@ def main(args):
 
     criterion = nn.BCEWithLogitsLoss()
 
-    kf = KFold(n_splits=args.folds, shuffle=True)
-    train_model(criterion, dataset, dataset_tr, dataset_test, kf, args.folds, device, args.num_epoch, args.learning_rate, args.batch)
+    train_model(criterion, dataset, dataset_tr, dataset_test, device, args.num_epoch, args.learning_rate, args.batch)
 
 if __name__ == '__main__':
     DATA_DIR = "train"
@@ -177,11 +176,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train U-Net model for segmentation')
     parser.add_argument('--data_dir', default=DATA_DIR)
     parser.add_argument('--test_dir', default=TEST_DIR)
-    parser.add_argument('--seed', type=int, default=1)
-    parser.add_argument('--num_workers', type=int, default=5)
+    parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--num_epoch', type=int, default=200)
     parser.add_argument('--batch', type=int, default=64)
-    parser.add_argument('--folds', type=int, default=4)
     parser.add_argument('--learning_rate', type=float, default=0.0001)
     parser.add_argument('--gpu_list', default="0")
     args = parser.parse_args()
