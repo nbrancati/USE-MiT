@@ -9,6 +9,8 @@ The requirements.txt file should list all Python libraries that the present code
 
 `pip install -r requirements.txt`
 
+Once the `segmentation_models_pytorch` package is installed, the folder USE_MiT should be added in the directory `segmentation_models_pytorch/decoders`
+
 # Running the code
 General usage notes to run the script train_test.py containing the main are:
 
